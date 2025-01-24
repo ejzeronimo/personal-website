@@ -4,12 +4,18 @@ This is the code for my personal website project for both school and other reaso
 Some things I would like to add one day:
 - [x] stars
 - [ ] lightspeed lines
-- [ ] cool car in sakura petals
+- [ ] cool car in Sakura petals
 - [ ] 3d printer printing
 - [ ] plane flying through the sky
 - [ ] plane density maps
 - [ ] train passing by
-- [ ] ghibli scene
+- [ ] Ghibli scene
+- [ ] globe with where IP is located
+- [ ] night sky
+- [ ] diamond that breaks into pieces
+- [ ] some LPX callback
+- [ ] network
+- [ ] Gundam eye catches
 
 ## To my professor
 To my professor, please run this locally using `npm install` then `npm run dev`. This shoud cause a local instance to start on port 3000. Feel free to follow me on GitHub!

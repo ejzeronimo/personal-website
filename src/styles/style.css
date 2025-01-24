@@ -1,13 +1,4 @@
 body {
-    margin: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-
-    /* https://colorhunt.co/palette/f9f7f7dbe2ef3f72af112d4e */
-    --color-primary: #3f72af;
-    --color-secondary: #112d4e;
-    --text-primary: #f9f7f7;
-    --text-secondary: #dbe2ef;
-
     color: var(--text-primary);
     background-color: var(--color-secondary);
 }
@@ -71,62 +62,6 @@ main {
     backdrop-filter: blur(1vmax);
 }
 
-
-#landing-page {
-    height: 100vh;
-    width: 100%;
-
-    position: relative;
-    overflow: hidden;
-
-    background: var(--color-primary);
-    background: linear-gradient(0deg, var(--color-primary) 0%, var(--color-secondary) 100%);
-}
-
-
-#landing-title {
-    z-index: 9;
-
-    position: absolute;
-    width: fit-content;
-
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-
-    text-align: center;
-}
-
-#landing-title>h1 {
-    margin: 0;
-
-    color: var(--text-primary);
-    font-size: 2.5em;
-}
-
-#landing-title>h2 {
-    margin: 0;
-
-    font-size: 1.3em;
-}
-
-/* NOTE: contact me form */
-#flavor-alert {
-    visibility: hidden;
-    opacity: 0;
-
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    background-color: var(--color-primary);
-    border-radius: 1em;
-    padding: 1em;
-
-    z-index: 10;
-
-    position: fixed;
-    top: 4em;
-    left: 50%;
-    transform: translate(-50%, 0);
-}
 
 #footer {
     position: relative;

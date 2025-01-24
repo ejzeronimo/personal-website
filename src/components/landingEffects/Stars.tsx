@@ -1,9 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import * as THREE from 'three';
 
-import "../../styles/landingEffects/style.css"
-import "../../styles/landingEffects/stars.css"
-
 import starImage from "../../resources/star.png";
 
 export default function LandingEffectController() {
@@ -85,5 +82,5 @@ export default function LandingEffectController() {
         };
     }, []);
 
-    return <canvas className="landing-background" ref={selfRef}></canvas>
+    return <canvas className="absolute left-0 top-0 z-[2] h-full w-full backdrop-blur-sm" ref={selfRef}></canvas>
 }
