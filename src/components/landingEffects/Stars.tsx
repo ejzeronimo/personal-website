@@ -1,51 +1,23 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
+import { Canvas, useFrame, useThree } from '@react-three/fiber'
+import { CameraControls, OrbitControls, PerspectiveCamera, PointMaterial, Points } from '@react-three/drei';
 import * as THREE from 'three';
 
-import starImage from "../../resources/star.png";
+const pointCount = 12000;
+const boxSize = 600;
 
-export default function LandingEffectController() {
-    const selfRef = useRef(null);
+const points = Array.from({ length: pointCount }, () => new THREE.Vector3(Math.random() * boxSize - (boxSize / 2), Math.random() * boxSize - (boxSize / 2), Math.random() * boxSize - (boxSize / 2)));
 
-    useEffect(() => {
-        let scene = new THREE.Scene();
-        let camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 1000);
-        let renderer = new THREE.WebGLRenderer({ canvas: (selfRef.current! as HTMLCanvasElement), alpha: true });
-        
+const velocities = Array.from({ length: pointCount }, () => 0)
+const accelerations = Array.from({ length: pointCount }, () => Math.random() * (.001 - .0005) + .0005);
 
-        camera.position.z = 1;
-        camera.rotation.x = Math.PI / 2;
+function StarPointCloud() {
+    const pointRef = useRef<THREE.Points>(null!);
 
-        // make stars
-        let points: THREE.Vector3[] = [];
-        let velocities: number[] = [];
-        let accelerations: number[] = [];
-
-        for (let i = 0; i < 6000; i++) {
-            let star = new THREE.Vector3(
-                Math.random() * 600 - 300,
-                Math.random() * 600 - 300,
-                Math.random() * 600 - 300
-            );
-
-            points.push(star);
-            velocities.push(0);
-            accelerations.push(Math.random() * (.001 - .0005) + .0005);
-        }
-
-        let starBufferGeometry = new THREE.BufferGeometry().setFromPoints(points);
-
-        let starMaterial = new THREE.PointsMaterial({
-            size: 0.02,
-            sizeAttenuation: true,
-            depthWrite: false,
-            blending: THREE.AdditiveBlending
-        });
-
-        let stars = new THREE.Points(starBufferGeometry, starMaterial);
-        scene.add(stars);
-
-        function animate() {
-            const positionAttribute = starBufferGeometry.getAttribute('position');
+    useFrame((state, delta, xrFrame) => {
+        if (pointRef.current) {
+            const starPoints = pointRef.current;
+            const positionAttribute = starPoints.geometry.getAttribute('position');
 
             for (let i = 0; i < positionAttribute.count; i++) {
                 let y = positionAttribute.getY(i);
@@ -61,26 +33,56 @@ export default function LandingEffectController() {
                 positionAttribute.setY(i, y);
             }
 
-            positionAttribute.needsUpdate = true;
-            stars.rotation.y += 0.001;
-
-            renderer.render(scene, camera);
-            requestAnimationFrame(animate);
+            starPoints.rotation.y += 0.001;
         }
+    });
+
+    let foo = points.map((vec) => {
+        return vec.x, vec.y, vec.z
+    });
+
+    return (
+        <Points positions={new Float32Array(foo)} ref={pointRef}>
+            <pointsMaterial
+                color={new THREE.Color(0xffffff)}
+                size={0.02}
+                sizeAttenuation={true}
+                depthWrite={false}
+                blending={THREE.AdditiveBlending}
+            />
+        </Points>
+    );
+}
+
+export default function LandingEffectController() {
+    const [windowSize, setWindowSize] = useState({ width: window.innerWidth, height: window.innerHeight });
+
+    useEffect(() => {
+        const controller = new AbortController();
+        const signal = controller.signal;
 
         function resize() {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            renderer.setSize(window.innerWidth, window.innerHeight);
+            setWindowSize({ width: window.innerWidth, height: window.innerHeight });
         }
 
-        animate();
+        window.addEventListener('resize', resize, { signal });
         resize();
-        window.addEventListener('resize', resize);
 
-        return () => {
-            window.removeEventListener('resize', resize);
-        };
+        return () => controller.abort();
     }, []);
 
-    return <canvas className="absolute left-0 top-0 z-[2] h-full w-full backdrop-blur-sm" ref={selfRef}></canvas>
+    return (
+        <Canvas
+            className="absolute left-0 top-0 z-[2] h-full w-full"
+            gl={canvas => {
+                let foo = new THREE.WebGLRenderer({ canvas, alpha: true });
+                foo.setSize(window.innerWidth, window.innerHeight);
+
+                return foo;
+            }}>
+            <PerspectiveCamera makeDefault aspect={windowSize.width / windowSize.height} position={[0, 0, 1]} rotation={[Math.PI / 2, 0, 0]} fov={60} near={1} far={1000} />
+            <StarPointCloud />
+            {/* <CameraControls /> */}
+        </Canvas>
+    );
 }

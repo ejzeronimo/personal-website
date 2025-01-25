@@ -8,5 +8,6 @@ const seed = 0;
 export default function LandingEffectController() {
     return <>
         <Stars />
+        {/* <GemTest /> */}
     </>
 }
