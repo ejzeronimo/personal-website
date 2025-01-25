@@ -1,31 +1,33 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber'
+import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { PerspectiveCamera, Points } from '@react-three/drei';
 import * as THREE from 'three';
 
+
+// make stars
+let points: THREE.Vector3[] = [];
+let velocities: number[] = [];
+let accelerations: number[] = [];
+
+for (let i = 0; i < 6000; i++) {
+    let star = new THREE.Vector3(
+        Math.random() * 600 - 300,
+        Math.random() * 600 - 300,
+        Math.random() * 600 - 300
+    );
+
+    points.push(star);
+    velocities.push(0);
+    accelerations.push(Math.random() * (.001 - .0005) + .0005);
+}
+
 function StarPointCloud() {
     const pointRef = useRef<THREE.Points>(null!);
+    const { gl, scene, camera } = useThree();
 
     // HACK: I could not tell you why but this squashes the whole image to fit rather than the standard react-3-fiber approach that crops
     useEffect(() => {
         if (pointRef.current) {
-            // make stars
-            let points: THREE.Vector3[] = [];
-            let velocities: number[] = [];
-            let accelerations: number[] = [];
-
-            for (let i = 0; i < 6000; i++) {
-                let star = new THREE.Vector3(
-                    Math.random() * 600 - 300,
-                    Math.random() * 600 - 300,
-                    Math.random() * 600 - 300
-                );
-
-                points.push(star);
-                velocities.push(0);
-                accelerations.push(Math.random() * (.001 - .0005) + .0005);
-            }
-
             let starBufferGeometry = new THREE.BufferGeometry().setFromPoints(points);
             let stars = pointRef.current;
             stars.geometry = starBufferGeometry;
@@ -50,6 +52,8 @@ function StarPointCloud() {
                 positionAttribute.needsUpdate = true;
                 stars.rotation.y += 0.001;
 
+                // this render call is the secret sauce I guess
+                gl.render(scene, camera);
                 requestAnimationFrame(animate);
             }
 
@@ -71,7 +75,6 @@ function StarPointCloud() {
 
 export default function LandingEffectController() {
     const [windowSize, setWindowSize] = useState({ width: window.innerWidth, height: window.innerHeight });
-    const cameraRef = useRef<THREE.PerspectiveCamera>(null!);
 
     useEffect(() => {
         const controller = new AbortController();
@@ -89,15 +92,16 @@ export default function LandingEffectController() {
 
     return (
         <Canvas
-            className="absolute left-0 top-0 z-[2] h-full w-full"
+            className="absolute left-0 top-0 h-full w-full backdrop-blur-[1vmax]"
             gl={canvas => {
                 let renderer = new THREE.WebGLRenderer({ canvas, antialias: false, alpha: true, powerPreference: "default" });
                 renderer.toneMapping = THREE.NoToneMapping;
-                renderer.setSize(window.innerWidth, window.innerHeight);
+                renderer.setSize(windowSize.width, windowSize.height);
 
                 return renderer;
-            }}>
-            <PerspectiveCamera makeDefault aspect={windowSize.width / windowSize.height} position={[0, 1, 0]} rotation={[Math.PI / 2, 0, 0]} fov={60} near={1} far={1000} ref={cameraRef} />
+            }}
+            camera={{ fov: 60, near: 1, far: 1000, position: [0, 1, 0], rotation: [Math.PI / 2, 0, 0], aspect: windowSize.width / windowSize.height }}
+        >
             <StarPointCloud />
         </Canvas>
     );
