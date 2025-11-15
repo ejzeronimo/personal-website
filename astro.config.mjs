@@ -1,20 +1,16 @@
 // @ts-check
-import { defineConfig } from 'astro/config';
-
-import react from '@astrojs/react';
-
-import tailwind from '@astrojs/tailwind';
+import react from '@astrojs/react'
+import tailwindcss from '@tailwindcss/vite'
+import { defineConfig } from 'astro/config'
 
 // https://astro.build/config
-export default defineConfig({
-  integrations: [react(), tailwind({
-    applyBaseStyles: false,
-  })],
+const config = defineConfig({
   vite: {
-    assetsInclude: [
-      "**/*.glb",
-      "**/*.glsl",
-      "**/*.inc"
-    ]
-  }
-});
+    // @ts-ignore
+    plugins: [tailwindcss()], 
+    assetsInclude: ['**/*.glb', '**/*.glsl', '**/*.inc'],
+  },
+  integrations: [react()],
+})
+
+export default config

@@ -1,13 +1,13 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import Navbar from "../components/Navbar";
-import Viewer from "../components/Viewer";
-import Portfolio from "../components/Portfolio";
-import LandingEffectController from "../components/LandingEffectController";
+import {LandingEffectController} from '../components/LandingEffectController'
+import Navbar from '../components/Navbar'
+import Portfolio from '../components/Portfolio'
+import Viewer from '../components/Viewer'
+import Layout from '../layouts/Layout.astro'
 
-import "../styles/globals.css";
-import "../styles/style.css";
-import { Separator } from "@/components/ui/separator";
+import '../styles/global.css'
+
+import { Separator } from '@/components/ui/separator'
 ---
 
 <Layout title="My Portfolio">
@@ -32,7 +32,7 @@ import { Separator } from "@/components/ui/separator";
     </div> -->
 
     <!-- NOTE: applies a random effect to the landing page -->
-    <LandingEffectController client:only="react" />
+    <LandingEffectController client:only />
   </div>
 
   <main>

@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-import Stars from "./landingEffects/Stars"
+import {Stars} from "./landingEffects/Stars"
 
 const seed = 0;
 
 
-export default function LandingEffectController() {
+export function LandingEffectController() {
     return <>
         <Stars />
         {/* <GemTest /> */}
