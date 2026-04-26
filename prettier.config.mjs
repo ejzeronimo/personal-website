@@ -9,7 +9,7 @@ const config = {
   tailwindStylesheet: './src/styles/global.css',
   importOrder: [
     '^(react/(.*)$)|^(react$)',
-    '^(next/(.*)$)|^(next$)',
+    '^(astro/(.*)$)|^(astro$)',
     '<THIRD_PARTY_MODULES>',
     '',
     '^@workspace/(.*)$',

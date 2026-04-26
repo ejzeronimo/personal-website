@@ -1,9 +1,17 @@
 ---
+import { Button } from '@/components/ui/button'
+
 import Layout from '../layouts/Layout.astro'
 
 import '../styles/global.css'
+import { Card, CardContent } from '@/components/ui/card'
 ---
 
 <Layout title="My Portfolio">
-  <main class="w-full bg-amber-600"></main>
+  <main
+    class="isolate flex h-svh w-full items-center justify-center gap-8 bg-gray-800"
+  >
+    <Button variant="arc" size="xl"> ARC RAIDERS </Button>
+
+  </main>
 </Layout>
