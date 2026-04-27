@@ -2,13 +2,5 @@
   "files.associations": {
     "*.css": "tailwindcss"
   },
-  "tailwindCSS.classFunctions": [
-    "cn",
-    "clsx"
-  ],
-  "editor.quickSuggestions": {
-    "strings": "on"
-  },
-  "editor.tabSize": 2,
-  "editor.detectIndentation": false
+  "tailwindCSS.classFunctions": ["cn", "clsx"]
 }

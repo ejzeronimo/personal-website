@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { PerspectiveCamera, Points } from '@react-three/drei'
-import { Canvas, useFrame, useThree } from '@react-three/fiber'
+import { useEffect, useRef, useState } from 'react'
+import { Points } from '@react-three/drei'
+import { Canvas, useThree } from '@react-three/fiber'
 import * as THREE from 'three'
 
 // make stars
@@ -92,7 +92,7 @@ export function Stars() {
     return () => controller.abort()
   }, [])
 
-  console.log(windowSize)
+  // console.log(windowSize)
 
   return (
     <Canvas

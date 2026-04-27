@@ -1,10 +1,12 @@
 # Hello there!
+
 This is the code for my personal website project for both school and other reasons.
 
 Some things I would like to add one day:
+
 - [x] stars
 - [ ] lightspeed lines
-- [ ] car in Sakura  petals
+- [ ] car in Sakura petals
 - [ ] 3d printer printing
 - [ ] plane flying through the sky
 - [ ] plane density maps
@@ -19,9 +21,11 @@ Some things I would like to add one day:
 - [ ] Matrix text waterfall
 
 ## To my professor
+
 To my professor, please run this locally using `npm install` then `npm run dev`. This shoud cause a local instance to start on port 3000. Feel free to follow me on GitHub!
 
 The five basic interactions I have:
+
 - [x] navbar handling
 - [x] scrolling
 - [x] portfolio interactivity
@@ -29,6 +33,7 @@ The five basic interactions I have:
 - [x] on hover effects
 
 ## Commands
+
 All commands are run from the root of the project, from a terminal:
 
 | Command                | Action                                           |
@@ -41,4 +46,5 @@ All commands are run from the root of the project, from a terminal:
 | `npm run astro --help` | Get help using the Astro CLI                     |
 
 ## Want to learn more?
+
 I built this using Astro, find more at [their documentation](https://docs.astro.build).

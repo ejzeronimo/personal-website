@@ -1,0 +1,46 @@
+@utility arc-ring-* {
+  position: relative;
+  --arc-primary: rgba(196, 85, 176, 1);
+  --arc-secondary: rgba(58, 172, 224, 1);
+  --gradient-tiling: calc(100% / 3);
+
+  &::after {
+    content: '' !important;
+    position: absolute;
+    inset: calc(var(--spacing) * -1);
+    padding: calc(var(--spacing) / 2);
+
+    border-radius: --value([*]);
+    border-radius: --value(*);
+    border-radius: --value(--radius-*);
+
+    mask-clip: content-box, padding-box;
+    mask-composite: exclude;
+    mask-image:
+      radial-gradient(circle, black 100%, rgb(122, 110, 110) 100%),
+      radial-gradient(circle, transparent 0, black 0);
+
+    animation: arc-ring-animate 4.5s cubic-bezier(0.44, 0.19, 0.53, 0.81)
+      reverse infinite;
+    background-size: 300% 300%;
+    background-image: repeating-linear-gradient(
+      345deg,
+      var(--arc-secondary) 0%,
+
+      white calc(var(--gradient-tiling) * 0.05),
+      white calc(var(--gradient-tiling) * 0.2),
+      transparent calc(var(--gradient-tiling) * 0.25),
+      transparent calc(var(--gradient-tiling) * 0.8),
+      var(--arc-primary) calc(var(--gradient-tiling) * 0.85),
+      var(--arc-primary) calc(var(--gradient-tiling) * 0.9),
+      var(--arc-secondary) calc(var(--gradient-tiling) * 0.95),
+      var(--arc-secondary) var(--gradient-tiling)
+    );
+  }
+}
+
+@keyframes arc-ring-animate {
+  0% {
+    background-position: 100% 100%;
+  }
+}
